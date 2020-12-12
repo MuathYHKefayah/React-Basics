@@ -1,28 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import styled from 'styled-components';
 import CharComponent from './CharComponent/CharComponent';
 import Person from './Person/Person';
 import UserInput from './UserInput/UserInput';
 import UserOutput from './UserOutput/UserOutput';
 import ValidationComponent from './ValidationComponent/ValidationComponent';
 
-
-
-const StyledButton = styled.button`
-    background-color: ${props => props.alt ? 'red' : 'green'};
-    color: white;
-    font: inherit;
-    border: 1px solid blue;
-    padding: 8px;
-    cursor: pointer;
-    margin: 5px;
-
-    &:hover {   // &  to indicate this hover belongs to upper css style
-      background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
-      color: black;
-    } 
-`;
 class App extends Component {
   state = {
      persons: [
@@ -158,14 +141,14 @@ class App extends Component {
           {
             this.state.persons.length > 0 ? 
             <div>
-              <StyledButton
+              <button
                 key="switchbtn"
-                alt = {this.state.showPersons} 
-                onClick={this.switchNameHandler.bind(this, this.state.persons[0].name + '!!', 30, 0)}>Switch First Person</StyledButton>
-              <StyledButton
+                className="button"
+                onClick={this.switchNameHandler.bind(this, this.state.persons[0].name + '!!', 30, 0)}>Switch First Person</button>
+              <button
                 key="togglebtn"
-                alt = {this.state.showPersons} 
-                onClick={this.togglePersonsHandler}> Toggle Persons</StyledButton>
+                className="button"
+                onClick={this.togglePersonsHandler}> Toggle Persons</button>
             </div> : null
           } 
           
