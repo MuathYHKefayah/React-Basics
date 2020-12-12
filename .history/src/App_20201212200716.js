@@ -10,7 +10,7 @@ import ValidationComponent from './ValidationComponent/ValidationComponent';
 
 
 const StyledButton = styled.button`
-    background-color: ${props => props.alt ? 'red' : 'green'};
+    background-color: green;
     color: white;
     font: inherit;
     border: 1px solid blue;
@@ -19,7 +19,7 @@ const StyledButton = styled.button`
     margin: 5px;
 
     &:hover {   // &  to indicate this hover belongs to upper css style
-      background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+      background-color: lightgreen;
       color: black;
     } 
 `;
@@ -110,6 +110,19 @@ class App extends Component {
 
 
   render() {
+    // const style = {
+    //   backgroundColor: 'green',
+    //   color: 'white',
+    //   font: 'inherit',
+    //   border: '1px solid blue',
+    //   padding: '8px',
+    //   cursor: 'pointer',
+    //   margin: '5px',
+    //   ':hover': {
+    //     backgroundColor: 'lightgreen',
+    //     color: 'black'
+    //   } 
+    // };
 
     const assignmentStyle = {
       color: 'lightcyan',
@@ -136,6 +149,12 @@ class App extends Component {
            
           </div>
         );
+
+        style.backgroundColor = 'red';
+        style[':hover'] = {
+          backgroundColor: 'salmon',
+          color: 'black'
+        };
       
     }
 
@@ -160,11 +179,11 @@ class App extends Component {
             <div>
               <StyledButton
                 key="switchbtn"
-                alt = {this.state.showPersons} 
+                style={style} 
                 onClick={this.switchNameHandler.bind(this, this.state.persons[0].name + '!!', 30, 0)}>Switch First Person</StyledButton>
               <StyledButton
                 key="togglebtn"
-                alt = {this.state.showPersons} 
+                style={style} 
                 onClick={this.togglePersonsHandler}> Toggle Persons</StyledButton>
             </div> : null
           } 
