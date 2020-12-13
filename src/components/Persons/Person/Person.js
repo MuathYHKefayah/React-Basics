@@ -11,6 +11,7 @@ const person = (props) => {
         cursor: 'pointer',
         opacity: '0.9'
     }
+    //comment these lines to prevent throw error : just for testing error boundary 
     // const rnd = Math.random();
     // if(rnd > 0.7){
     //     throw new Error('Somthing went wrong');

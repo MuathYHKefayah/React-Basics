@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import classes from './App.css';
-import CharComponent from './CharComponent/CharComponent';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
-import Person from './Person/Person';
-import UserInput from './UserInput/UserInput';
-import UserOutput from './UserOutput/UserOutput';
-import ValidationComponent from './ValidationComponent/ValidationComponent';
+import CharComponent from '../components/CharComponent/CharComponent';
+import Persons from '../components/Persons/Persons';
+import UserInput from '../components/UserInput/UserInput';
+import UserOutput from '../components/UserOutput/UserOutput';
+import ValidationComponent from '../components/ValidationComponent/ValidationComponent';
+import CockPit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
   state = {
@@ -27,13 +27,6 @@ class App extends Component {
     personsCopy[index].age = newAge;
 
     //Don't Do This: this.state.persons[index].name = newName;
-    // this.setState({
-    //   persons: [
-    //     { name:newName, age: 25},
-    //     { name:'Ahmad', age: 26},
-    //     { name:'Khaled', age: newAge},
-    //   ]
-    // })
     this.setState({
         persons: personsCopy
       })
@@ -102,77 +95,34 @@ class App extends Component {
       textShadow: '2px 2px 4px #000000'
     }
 
-    let btnClass = '';
-
     let persons = null;
     // Way #2 this is the preferd way
     if(this.state.showPersons){
       persons = 
         (
-          <div>
-            {this.state.persons.map((person, index) => {
-              return <ErrorBoundary key={person.id} >
-                        <Person
-                          name={person.name} 
-                          age={person.age}
-                          click={this.switchNameHandler.bind(this, person.name+'!', person.age + 5, index)}
-                          changed={(event) => this.nameChangedHandler(event, person.id)}
-                          deleted={this.deletePersonHandler.bind(this, index)}
-                        />
-                      </ErrorBoundary> 
-                      
-            })
-            }
-           
-          </div>
+            <Persons
+              persons={this.state.persons} 
+              switched={this.switchNameHandler}
+              changed={this.nameChangedHandler}
+              deleted={this.deletePersonHandler}
+              />
         );
-      btnClass = classes.Red;
+      
     }
-
-    
-    let assignedClasses = [];
-
-    if(this.state.persons.length <= 2){
-      assignedClasses.push(classes.red);
-    }
-    if(this.state.persons.length <= 1){
-      assignedClasses.push(classes.bold);
-    }
-
 
     return (
       // jsx \\ write html code in js file
         <div className={classes.App}>
-          <h1>Hi, I'm a React App</h1>
-          <p className={assignedClasses.join(' ')}>This is really working!</p>
-          {
-            this.state.persons.length > 0 ? 
-            <div>
-              <button
-                key="switchbtn"
-                className={btnClass}
-                onClick={this.switchNameHandler.bind(this, this.state.persons[0].name + '!!', 30, 0)}>Switch First Person</button>
-              <button
-                key="togglebtn"
-                className={btnClass}
-                onClick={this.togglePersonsHandler}> Toggle Persons</button>
-            </div> : null
-          } 
           
-          {
-          // Way #1 
-          /* { this.state.showPersons ? 
-              <div>
-                <Person name={this.state.persons[0].name} age={this.state.persons[0].age}/>
-                <Person 
-                  name={this.state.persons[1].name}  
-                  age={this.state.persons[1].age}
-                  click={this.switchNameHandler.bind(this, 'Moath!', 40)}
-                  changed={this.nameChangedHandler}
-                  >My Hobbies: Racing</Person>
-                <Person name={this.state.persons[2].name} age={this.state.persons[2].age}/>
-              </div> : null
-          } */}
+          {/* Cockpit */}
+          <CockPit 
+            persons={this.state.persons}
+            showPersons={this.state.showPersons}
+            toggled={this.togglePersonsHandler}
+            switched={this.switchNameHandler}
+            />
+
+          {/* display persons */}
           {persons}
 
           <hr/>
@@ -204,7 +154,6 @@ class App extends Component {
           </div>
         </div>
     );
-    //return React.createElement('div', {className: 'App'} , React.createElement('h1', null , 'Hi, I\'m a React App !!!' ))
   }
 }
 

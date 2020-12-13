@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactToolTip from 'react-tooltip'
+import ReactToolTip from 'react-tooltip';
 
 const CharComponent = (props) => {
     const style = {
