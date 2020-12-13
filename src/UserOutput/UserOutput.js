@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './UserOutput.css'
+import classes from './UserOutput.css'
 
 class UserOutput extends Component {
     
@@ -10,7 +10,7 @@ class UserOutput extends Component {
             fontSize: '30px'
         };
         return(
-            <div className="UserOutput">
+            <div className={classes.UserOutput}>
                 <p style={style}>{this.props.name}</p>
                 <p>Paragraph 1</p>
                 <p>Paragraph 2</p>

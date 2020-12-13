@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import CharComponent from './CharComponent/CharComponent';
 import Person from './Person/Person';
 import UserInput from './UserInput/UserInput';
@@ -99,6 +99,8 @@ class App extends Component {
       textShadow: '2px 2px 4px #000000'
     }
 
+    let btnClass = '';
+
     let persons = null;
     // Way #2 this is the preferd way
     if(this.state.showPersons){
@@ -119,35 +121,35 @@ class App extends Component {
            
           </div>
         );
-      
+      btnClass = classes.Red;
     }
 
     
-    let classes = [];
+    let assignedClasses = [];
 
     if(this.state.persons.length <= 2){
-      classes.push('red');
+      assignedClasses.push(classes.red);
     }
     if(this.state.persons.length <= 1){
-      classes.push('bold');
+      assignedClasses.push(classes.bold);
     }
 
 
     return (
       // jsx \\ write html code in js file
-        <div className="App">
+        <div className={classes.App}>
           <h1>Hi, I'm a React App</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
+          <p className={assignedClasses.join(' ')}>This is really working!</p>
           {
             this.state.persons.length > 0 ? 
             <div>
               <button
                 key="switchbtn"
-                className="button"
+                className={btnClass}
                 onClick={this.switchNameHandler.bind(this, this.state.persons[0].name + '!!', 30, 0)}>Switch First Person</button>
               <button
                 key="togglebtn"
-                className="button"
+                className={btnClass}
                 onClick={this.togglePersonsHandler}> Toggle Persons</button>
             </div> : null
           } 
