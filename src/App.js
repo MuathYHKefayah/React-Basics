@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.css';
 import CharComponent from './CharComponent/CharComponent';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 import Person from './Person/Person';
 import UserInput from './UserInput/UserInput';
 import UserOutput from './UserOutput/UserOutput';
@@ -110,14 +111,16 @@ class App extends Component {
         (
           <div>
             {this.state.persons.map((person, index) => {
-              return <Person
-                        key={person.id} 
-                        name={person.name} 
-                        age={person.age}
-                        click={this.switchNameHandler.bind(this, person.name+'!', person.age + 5, index)}
-                        changed={(event) => this.nameChangedHandler(event, person.id)}
-                        deleted={this.deletePersonHandler.bind(this, index)}
+              return <ErrorBoundary key={person.id} >
+                        <Person
+                          name={person.name} 
+                          age={person.age}
+                          click={this.switchNameHandler.bind(this, person.name+'!', person.age + 5, index)}
+                          changed={(event) => this.nameChangedHandler(event, person.id)}
+                          deleted={this.deletePersonHandler.bind(this, index)}
                         />
+                      </ErrorBoundary> 
+                      
             })
             }
            

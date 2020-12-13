@@ -11,7 +11,10 @@ const person = (props) => {
         cursor: 'pointer',
         opacity: '0.9'
     }
-
+    // const rnd = Math.random();
+    // if(rnd > 0.7){
+    //     throw new Error('Somthing went wrong');
+    // }
     return (
         <div className={classes.Person}>
             <p onClick={props.click}>I'm {props.name} and I am {props.age} years old!</p>
