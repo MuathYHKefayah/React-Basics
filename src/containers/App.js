@@ -10,6 +10,9 @@ import UserOutput from "../components/UserOutput/UserOutput";
 import ValidationComponent from "../components/ValidationComponent/ValidationComponent";
 import CharComponent from "../components/CharComponent/CharComponent";
 
+import Aux from '../hoc/Auxiliary';
+import withClass  from '../hoc/withClass';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -139,7 +142,8 @@ class App extends Component {
 
     return (
       // jsx \\ write html code in js file
-      <div className={classes.App}>
+      //<div className={classes.App}>
+      <Aux>
         {/* Cockpit */}
         <CockPit
           title={this.props.appTitle}
@@ -186,9 +190,10 @@ class App extends Component {
             })}
           </div>
         </div>
-      </div>
+      </Aux>
+      //</div>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);

@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import classes from "./Cockpit.css";
+import Aux from "../../hoc/Auxiliary";
+import withClass from "../../hoc/withClass";
 
 const cockPit = (props) => {
   useEffect(() => {
@@ -37,7 +39,8 @@ const cockPit = (props) => {
   }
 
   return (
-    <div className={classes.Cockpit}>
+    // <div className={classes.Cockpit}>
+    <Aux>
       <h1>{props.title}</h1>
       <p className={assignedClasses.join(" ")}>This is really working!</p>
       {props.persons.length > 0 ? (
@@ -59,10 +62,13 @@ const cockPit = (props) => {
           </button>
         </div>
       ) : null}
-    </div>
+    </Aux>
+    // </div>
   );
 };
 
-export default React.memo(cockPit); // use React.memo to optimization the functional component
+export default withClass(React.memo(cockPit), classes.Cockpit);
+
+// use React.memo to optimization the functional component
 // it's basically store a snapshot of this component and if its
 // only input changes it will re-rendered it any else React will return back the stored snapshot
