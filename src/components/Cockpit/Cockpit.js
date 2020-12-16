@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import classes from "./Cockpit.css";
 import Aux from "../../hoc/Auxiliary";
 import withClass from "../../hoc/withClass";
@@ -9,7 +9,9 @@ const cockPit = (props) => {
 
   //const toggleBtnRef = React.createRef(); //* doesn't work in functional components
   const toggleBtnRef = useRef(null);
+  const authContext = useContext(AuthContext);
 
+  console.log(authContext.authenticated);
   //* we put ref action in useEffect because this method called after first render 
   //* just to give react a chance to connecting to ref
   useEffect(() => {
@@ -80,7 +82,7 @@ const cockPit = (props) => {
             {" "}
             Toggle Persons
           </button>
-          <AuthContext.Consumer>{(context)=> <button onClick={context.login}>Login</button>}</AuthContext.Consumer>
+          <button onClick={authContext.login}>Login</button>
         </div>
       ) : null}
     </Aux>
