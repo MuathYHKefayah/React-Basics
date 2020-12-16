@@ -10,8 +10,11 @@ import UserOutput from "../components/UserOutput/UserOutput";
 import ValidationComponent from "../components/ValidationComponent/ValidationComponent";
 import CharComponent from "../components/CharComponent/CharComponent";
 
-import Aux from '../hoc/Auxiliary';
-import withClass  from '../hoc/withClass';
+import Aux from "../hoc/Auxiliary";
+import withClass from "../hoc/withClass";
+import PropTypes from "prop-types";
+
+import AuthContext from "../context/auth-context";
 
 class App extends Component {
   constructor(props) {
@@ -29,6 +32,8 @@ class App extends Component {
     username: "Moath",
     showPersons: false,
     inputText: "",
+    changeCounter: 0,
+    authenticated: false,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -82,9 +87,18 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({
-      persons: persons,
+    //* Setting State correctly
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1,
+      };
     });
+    //* don't do that because sometimes maybe we don't have the latest state
+    // this.setState({
+    //   persons: persons,
+    //   changeCounter: this.state.changeCounter + 1
+    // });
   };
 
   deletePersonHandler = (personIndex) => {
@@ -121,6 +135,10 @@ class App extends Component {
     this.setState({ inputText: updatedText });
   };
 
+  loginHandler = () => {
+    this.setState({ authenticated: true });
+  };
+
   render() {
     const assignmentStyle = {
       color: "lightcyan",
@@ -144,18 +162,25 @@ class App extends Component {
       // jsx \\ write html code in js file
       //<div className={classes.App}>
       <Aux>
-        {/* Cockpit */}
-        <CockPit
-          title={this.props.appTitle}
-          personsLength={this.state.persons.length}
-          persons={this.state.persons}
-          showPersons={this.state.showPersons}
-          toggled={this.togglePersonsHandler}
-          switched={this.switchNameHandler}
-        />
+        <AuthContext.Provider
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler,
+          }}
+        >
+          {/* Cockpit */}
+          <CockPit
+            title={this.props.appTitle}
+            personsLength={this.state.persons.length}
+            persons={this.state.persons}
+            showPersons={this.state.showPersons}
+            toggled={this.togglePersonsHandler}
+            switched={this.switchNameHandler}
+          />
 
-        {/* display persons */}
-        {persons}
+          {/* display persons */}
+          {persons}
+        </AuthContext.Provider>
 
         <hr />
         <h1 style={assignmentStyle}>Assignment #1</h1>
@@ -196,4 +221,7 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+  appTitle: PropTypes.string,
+};
 export default withClass(App, classes.App);

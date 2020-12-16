@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import Person from "./Person/Person";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
+import PropTypes from 'prop-types';
 
 class Persons extends PureComponent {
   // static getDerivedStateFromProps(props, state){
@@ -62,5 +63,12 @@ class Persons extends PureComponent {
     });
   }
 }
+
+Persons.propTypes = {
+  persons: PropTypes.array,
+  switched: PropTypes.func,
+  deleted: PropTypes.func,
+  changed: PropTypes.func
+};
 
 export default Persons;

@@ -1,14 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import classes from "./Cockpit.css";
 import Aux from "../../hoc/Auxiliary";
 import withClass from "../../hoc/withClass";
+import PropTypes from "prop-types";
+import AuthContext from '../../context/auth-context';
 
 const cockPit = (props) => {
+
+  //const toggleBtnRef = React.createRef(); //* doesn't work in functional components
+  const toggleBtnRef = useRef(null);
+
+  //* we put ref action in useEffect because this method called after first render 
+  //* just to give react a chance to connecting to ref
+  useEffect(() => {
+    console.log("[Cockpit.js] useEffect");
+    
+    toggleBtnRef.current.click();
+
+    return () => {
+      console.log('[Cockpit.js] cleanup work in useEffect');
+    }
+    
+  }, []); 
+
   useEffect(() => {
     console.log("[Cockpit.js] useEffect 1");
     // Http request...
     setTimeout(() => {
-      alert("Persons object changed !");
+      alert("Persons object changed or First time displayed!");
     }, 1000);
   }, [props.personsLength]); // dependencies
 
@@ -56,15 +75,27 @@ const cockPit = (props) => {
             key="togglebtn"
             className={btnClass}
             onClick={() => props.toggled()}
+            ref={toggleBtnRef}
           >
             {" "}
             Toggle Persons
           </button>
+          <AuthContext.Consumer>{(context)=> <button onClick={context.login}>Login</button>}</AuthContext.Consumer>
         </div>
       ) : null}
     </Aux>
     // </div>
   );
+};
+
+cockPit.propTypes = {
+  title: PropTypes.string,
+  persons: PropTypes.array,
+  personsLength: PropTypes.number,
+  showPersons: PropTypes.bool,
+  switched: PropTypes.func,
+  toggled: PropTypes.func,
+  login: PropTypes.bool
 };
 
 export default withClass(React.memo(cockPit), classes.Cockpit);
